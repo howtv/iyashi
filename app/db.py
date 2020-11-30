@@ -4,7 +4,6 @@ import psycopg2
 from psycopg2.extras import DictCursor
 from dotenv import load_dotenv
 
-import const
 
 if os.environ.get("ENVIRONMENT") is None:
     load_dotenv()
@@ -21,7 +20,7 @@ def _get_connection():
 
 def init():
     _create_table()
-    # add_file("", const.DOG)
+    # add_file("", animal.DOG)
     return
 
 

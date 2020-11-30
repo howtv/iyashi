@@ -1,2 +1,0 @@
-DOG = "dog"
-CAT = "cat"
