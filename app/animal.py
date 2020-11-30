@@ -8,8 +8,7 @@ from PIL import Image
 from torch.nn import functional as F
 from torchvision import transforms
 
-
-import slackbot_settings
+from slackbot_settings import API_TOKEN
 
 DOG = "dog"
 CAT = "cat"
@@ -21,7 +20,7 @@ DOG_EMOJI = "dog2"
 CAT_EMOJI = "cat2"
 HEDGEHOG_EMOJI = "hedgehog"
 OWL_EMOJI = "owl"
-CHINCHILLA_EMOJI = "secret"
+CHINCHILLA_EMOJI = "mouse2"
 UNDEFINED_EMOJI = "question"
 
 CLASS_NAMES = ["cat", "chinchilla", "dog", "hedgehog", "owl"]
@@ -62,7 +61,7 @@ def predict(url):
     try:
         responce = requests.get(
             url,
-            headers={"Authorization": "Bearer {}".format(slackbot_settings.API_TOKEN)},
+            headers={"Authorization": "Bearer {}".format(API_TOKEN)},
             stream=True,
         )
         img = Image.open(io.BytesIO(responce.content)).convert("RGB")

@@ -1,7 +1,9 @@
 from slackbot.bot import listen_to
-import db
 
 import animal
+import db
+from slackbot_settings import IMAGE_UPLOADED_CHANNEL, in_channel
+
 
 db.init()
 
@@ -13,42 +15,43 @@ def iyashi(message):
         message.send(row[0])
 
 
-@listen_to("にゃーん")
+@listen_to("cat|nyan|にゃーん|ニャーン")
 def cat(message):
     row = db.get_file_by_animal(animal.CAT)
     if row is not None:
         message.send(row[0])
 
 
-@listen_to("わんわん")
+@listen_to("dog|wanwan|わんわん|ワンワン")
 def dog(message):
     row = db.get_file_by_animal(animal.DOG)
     if row is not None:
         message.send(row[0])
 
 
-@listen_to("チンチラ")
+@listen_to("chinchilla|チンチラ|ちんちら")
 def chinchilla(message):
     row = db.get_file_by_animal(animal.CHINCHILLA)
     if row is not None:
         message.send(row[0])
 
 
-@listen_to("ハリネズミ")
+@listen_to("hedgehog|ハリネズミ|はりねずみ")
 def hedgehog(message):
     row = db.get_file_by_animal(animal.HEDGEHOG)
     if row is not None:
         message.send(row[0])
 
 
-@listen_to("フクロウ")
+@listen_to("owl|フクロウ|ふくろう|ほーほー|ホーホー")
 def owl(message):
     row = db.get_file_by_animal(animal.OWL)
     if row is not None:
         message.send(row[0])
 
 
-@listen_to("predict")
+@listen_to(".*")
+@in_channel(IMAGE_UPLOADED_CHANNEL)
 def post(message):
     if "files" in message.body.keys():
         for file in message.body["files"]:
