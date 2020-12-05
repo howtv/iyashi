@@ -1,0 +1,29 @@
+{
+    "name": "iyashi",
+    "description": "",
+    "repository": "https://github.com/Doarakko/iyashi",
+    "keywords": ["iyashi", "slack", "bot", "machine learning"],
+    "env": {
+        "ENVIRONMENT": {
+            "description": "Please do not change this value, ",
+            "value": "production"
+        },
+        "SLACK_BOT_TOKEN": {
+            "description": "Enter your slack bot token.",
+            "value": "abcdefgh"
+        },
+        "IMAGE_UPLOADED_CHANNEL": {
+            "description": "Please enter the channel name where photos would be posted.",
+            "value": "pet"
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-python"
+        }
+    ],
+    "addons": [
+        "heroku-postgresql"
+      ]
+  }
+  
