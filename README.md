@@ -6,6 +6,8 @@ When you post a picture of an animal, it will be automatically classified and re
 
 If you have a heroku account, you can use it without coding.
 
+![example](./example.gif)
+
 ## What is "iyashi"
 
 "iyashi" is a Japanese word meaning "soothing" or "healing" mentally and physically.
@@ -20,7 +22,7 @@ Feel free to use.
 
 [Slack workspace for demo](https://join.slack.com/t/iyashihq/shared_invite/zt-jt999y5v-zcuB5o1aEl3rLEZD~_pRMQ)
 
-## Requiremnets
+## Requirements
 
 - Heroku account
 - Slack bot token
