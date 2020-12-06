@@ -1,8 +1,16 @@
 {
     "name": "iyashi",
-    "description": "",
+    "description": "This is a slack bot that randomly returns the pictures of animals you posted. When you post a picture of an animal, it will be automatically classified and registered.",
     "repository": "https://github.com/Doarakko/iyashi",
-    "keywords": ["iyashi", "slack", "bot", "machine learning"],
+    "keywords": [
+        "iyashi",
+        "slack bot",
+        "machine learning",
+        "image recognition",
+        "pytorch",
+        "slack api",
+        "deep learning"
+    ],
     "env": {
         "ENVIRONMENT": {
             "description": "Please do not change this value, ",
@@ -24,6 +32,5 @@
     ],
     "addons": [
         "heroku-postgresql"
-      ]
-  }
-  
+    ]
+}
