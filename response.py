@@ -74,5 +74,7 @@ def post(message):
     if "files" in message.body.keys():
         for file in message.body["files"]:
             label = animal.predict(file["url_private_download"])
-            db.add_file(file["permalink"], label)
+            if label is not None:
+                db.add_file(file["permalink"], label)
+
             message.react(animal.get_emoji(label))
