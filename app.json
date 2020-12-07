@@ -13,7 +13,7 @@
     ],
     "env": {
         "ENVIRONMENT": {
-            "description": "Please do not change this value, ",
+            "description": "Please do not change this value.",
             "value": "production"
         },
         "SLACK_BOT_TOKEN": {
