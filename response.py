@@ -72,9 +72,12 @@ def owl(message):
 @in_channel(IMAGE_UPLOADED_CHANNEL)
 def post(message):
     if "files" in message.body.keys():
+        labels = set()
         for file in message.body["files"]:
             label = animal.predict(file["url_private_download"])
             if label is not None:
                 db.add_file(file["permalink"], label)
+                labels.add(label)
 
-            message.react(animal.get_emoji(label))
+        for l in labels:
+            message.react(animal.get_emoji(l))
