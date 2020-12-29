@@ -33,8 +33,8 @@ def _create_table():
                     id serial not null,\
                     url text not NULL,\
                     animal text not NULL,\
-                    created_at TIMESTAMP,\
-                    updated_at TIMESTAMP,\
+                    created_at TIMESTAMP DEFAULT NOW(),\
+                    updated_at TIMESTAMP DEFAULT NOW(),\
                     PRIMARY KEY (id),\
                     UNIQUE(url)\
                     );"
