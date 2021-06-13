@@ -23,7 +23,7 @@ def iyashi(message):
         message.send(NO_PICTURE_MESSAGE)
 
 
-@listen_to("cat|nyan|にゃーん|ニャーン")
+@listen_to("nyan|にゃーん|ニャーン")
 def cat(message):
     row = db.get_file_by_animal(animal.CAT)
     if row is not None:
@@ -32,7 +32,7 @@ def cat(message):
         message.send(NO_PICTURE_MESSAGE)
 
 
-@listen_to("dog|wanwan|わんわん|ワンワン")
+@listen_to("wanwan|わんわん|ワンワン")
 def dog(message):
     row = db.get_file_by_animal(animal.DOG)
     if row is not None:
@@ -59,7 +59,7 @@ def hedgehog(message):
         message.send(NO_PICTURE_MESSAGE)
 
 
-@listen_to("owl|フクロウ|ふくろう|ほーほー|ホーホー")
+@listen_to("フクロウ|ふくろう|ほーほー|ホーホー")
 def owl(message):
     row = db.get_file_by_animal(animal.OWL)
     if row is not None:
