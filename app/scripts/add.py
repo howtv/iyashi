@@ -3,14 +3,16 @@ import os
 import sys
 
 sys.path.append(os.path.abspath("."))
+import animal
 from db import Database
 from file import File
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", help="url")
+    parser.add_argument("-a", help="animal", choices=animal.CLASS_NAMES)
     args = parser.parse_args()
 
     Database.initialise()
     file = File()
-    file.delete_by_url(args.u)
+    file.add(url=args.u, animal=args.a)
