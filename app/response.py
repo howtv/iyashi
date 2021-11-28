@@ -1,8 +1,8 @@
 from slackbot.bot import listen_to
 
 import animal
-import db
 from slackbot_settings import IMAGE_UPLOADED_CHANNEL, in_channel
+from file import File
 
 
 NO_PICTURE_MESSAGE = (
@@ -11,60 +11,64 @@ NO_PICTURE_MESSAGE = (
     )
 )
 
-db.init()
-
 
 @listen_to("iyashi")
 def iyashi(message):
-    row = db.get_file_by_random()
-    if row is not None:
-        message.send(row[0])
-    else:
+    try:
+        file = File()
+        row = file.get_by_random()
+        message.send(row.url)
+    except:
         message.send(NO_PICTURE_MESSAGE)
 
 
 @listen_to("nyan|にゃーん|ニャーン")
 def cat(message):
-    row = db.get_file_by_animal(animal.CAT)
-    if row is not None:
-        message.send(row[0])
-    else:
+    try:
+        file = File()
+        row = file.get_by_animal(animal.CAT)
+        message.send(row.url)
+    except:
         message.send(NO_PICTURE_MESSAGE)
 
 
 @listen_to("wanwan|わんわん|ワンワン")
 def dog(message):
-    row = db.get_file_by_animal(animal.DOG)
-    if row is not None:
-        message.send(row[0])
-    else:
+    try:
+        file = File()
+        row = file.get_by_animal(animal.DOG)
+        message.send(row.url)
+    except:
         message.send(NO_PICTURE_MESSAGE)
 
 
 @listen_to("chinchilla|チンチラ|ちんちら")
 def chinchilla(message):
-    row = db.get_file_by_animal(animal.CHINCHILLA)
-    if row is not None:
-        message.send(row[0])
-    else:
+    try:
+        file = File()
+        row = file.get_by_animal(animal.CHINCHILLA)
+        message.send(row.url)
+    except:
         message.send(NO_PICTURE_MESSAGE)
 
 
 @listen_to("hedgehog|ハリネズミ|はりねずみ")
 def hedgehog(message):
-    row = db.get_file_by_animal(animal.HEDGEHOG)
-    if row is not None:
-        message.send(row[0])
-    else:
+    try:
+        file = File()
+        row = file.get_by_animal(animal.HEDGEHOG)
+        message.send(row.url)
+    except:
         message.send(NO_PICTURE_MESSAGE)
 
 
 @listen_to("フクロウ|ふくろう|ほーほー|ホーホー")
 def owl(message):
-    row = db.get_file_by_animal(animal.OWL)
-    if row is not None:
-        message.send(row[0])
-    else:
+    try:
+        file = File()
+        row = file.get_by_animal(animal.OWL)
+        message.send(row.url)
+    except:
         message.send(NO_PICTURE_MESSAGE)
 
 
@@ -76,7 +80,8 @@ def post(message):
         for file in message.body["files"]:
             label = animal.predict(file["url_private_download"])
             if label is not None:
-                db.add_file(file["permalink"], label)
+                f = File()
+                f.add(file["permalink"], label)
                 labels.add(label)
 
         for l in labels:
