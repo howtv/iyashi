@@ -1,78 +1,44 @@
 import os
-
-import psycopg2
-from psycopg2.extras import DictCursor
-
-DATABASE_URL = os.environ.get("DATABASE_URL")
+from psycopg2 import pool
 
 
-def _get_connection():
-    try:
-        return psycopg2.connect(DATABASE_URL)
-    except Exception as e:
-        print(e)
+class Database:
+    __connection_pool = None
+
+    @classmethod
+    def initialise(cls):
+        cls.__connection_pool = pool.SimpleConnectionPool(
+            dsn=os.environ["DATABASE_URL"], minconn=2, maxconn=10
+        )
+
+    @classmethod
+    def get_connection(cls):
+        return cls.__connection_pool.getconn()
+
+    @classmethod
+    def return_connection(cls, connection):
+        Database.__connection_pool.putconn(connection)
+
+    @classmethod
+    def close_all_connections(cls):
+        Database.__connection_pool.closeall()
 
 
-def init():
-    _create_table()
-    # add_file("", animal.DOG)
-    return
+class Cursor:
+    def __init__(self):
+        self.connection = None
+        self.cursor = None
 
+    def __enter__(self):
+        self.connection = Database.get_connection()
+        self.cursor = self.connection.cursor()
+        return self.cursor
 
-def _create_table():
-    try:
-        with _get_connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "CREATE TABLE files (\
-                    id serial not null,\
-                    url text not NULL,\
-                    animal text not NULL,\
-                    created_at TIMESTAMP DEFAULT NOW(),\
-                    updated_at TIMESTAMP DEFAULT NOW(),\
-                    PRIMARY KEY (id),\
-                    UNIQUE(url)\
-                    );"
-                )
-            conn.commit()
-    except Exception as e:
-        print(e)
+    def __exit__(self, excexption_type, excexption_value, excexption_tb):
+        if excexption_value is not None:
+            self.connection.rollback()
+        else:
+            self.cursor.close()
+            self.connection.commit()
 
-
-def get_file_by_animal(animal: str):
-    try:
-        with _get_connection() as conn:
-            with conn.cursor(cursor_factory=DictCursor) as cur:
-                cur.execute(
-                    "SELECT url FROM files WHERE animal = %s ORDER BY RANDOM() limit 1",
-                    (animal,),
-                )
-                return cur.fetchone()
-    except Exception as e:
-        print(e)
-
-
-def get_file_by_random():
-    try:
-        with _get_connection() as conn:
-            with conn.cursor(cursor_factory=DictCursor) as cur:
-                cur.execute("SELECT url FROM files ORDER BY RANDOM() limit 1")
-                return cur.fetchone()
-    except Exception as e:
-        print(e)
-
-
-def add_file(url: str, animal: str):
-    try:
-        with _get_connection() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "INSERT INTO files (url, animal) VALUES (%s, %s)",
-                    (
-                        url,
-                        animal,
-                    ),
-                )
-            conn.commit()
-    except Exception as e:
-        print(e)
+        Database.return_connection(self.connection)

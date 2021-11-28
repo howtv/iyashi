@@ -16,7 +16,7 @@ services:
     command: python run.py
   postgres:
     image: postgres:13.4
-    container_name: iyashi_postgresql
+    container_name: postgresql
     ports:
       - 5432:5432
     volumes:
