@@ -12,9 +12,9 @@
         "deep learning"
     ],
     "env": {
-        "ENVIRONMENT": {
-            "description": "Please do not change this value.",
-            "value": "production"
+        "APP_BASE": {
+            "description": "Do not change this value.",
+            "value": "app"
         },
         "SLACK_BOT_TOKEN": {
             "description": "Enter your slack bot token.",
@@ -26,6 +26,9 @@
         }
     },
     "buildpacks": [
+        {
+            "url": "https://github.com/lstoll/heroku-buildpack-monorepo"
+        },
         {
             "url": "https://github.com/heroku/heroku-buildpack-python"
         }
